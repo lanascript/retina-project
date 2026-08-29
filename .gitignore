@@ -1,0 +1,51 @@
+# ── Python ──────────────────────────────────────────────────
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# ── Virtual environments ─────────────────────────────────────
+venv/
+.venv/
+env/
+
+# ── macOS ────────────────────────────────────────────────────
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# ── Large dataset image folders ───────────────────────────────
+0.0.Normal/
+10.0.Possible glaucoma/
+10.1.Optic atrophy/
+bangladesh_data/
+bangladesh_masks/
+DRIVE/
+STARE/
+CHASEDB1/
+DRIVE_datasets_training_testing/
+test_drive/
+processed_masks/
+disc_debug/
+test_images/
+
+# ── Model weights (large binaries) ───────────────────────────
+*.h5
+*.pth
+*.keras
+pretrained_model/
+
+# ── HDF5 data files ──────────────────────────────────────────
+*.hdf5
+
+# ── IDE ──────────────────────────────────────────────────────
+.vscode/
+.idea/
+
+# ── Keep these (output CSVs, plots, reports) ─────────────────
+# retinal_biomarkers_full.csv  ← tracked
+# disc_features.csv            ← tracked
+# combined_features.csv        ← tracked
+# *.png plots                  ← tracked
+# *.txt stats                  ← tracked

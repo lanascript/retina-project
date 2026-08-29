@@ -1,0 +1,19 @@
+Model Comparison — 5-Fold Stratified Cross-Validation
+=================================================================
+RF                                  0.6997 0.7346 0.6757 0.7845 0.7163
+LR                                  0.7104 0.7135 0.7095 0.7655 0.7124
+Hybrid RF                           0.9648 0.9618 0.9686 0.9923 0.9646
+
+Feature Importance (Random Forest):
+  Area Bright Frac              : 0.2428
+  Green Intensity               : 0.2197
+  Brightness                    : 0.1906
+  Redness                       : 0.1748
+  Margin Sharpness              : 0.1721
+
+Logistic Regression Coefficients:
+  Brightness                    : +2.1216  → higher = more Papilledema
+  Redness                       : -0.6414  → lower = more Papilledema
+  Green Intensity               : -1.7358  → lower = more Papilledema
+  Margin Sharpness              : -0.6418  → lower = more Papilledema
+  Area Bright Frac              : -1.5465  → lower = more Papilledema

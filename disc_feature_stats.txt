@@ -1,0 +1,26 @@
+Disc Feature Stats — Normal vs Papilledema
+=======================================================
+Disc Brightness:
+  Normal      : 155.9285 ± 21.2065
+  Papilledema : 143.1447 ± 22.2773
+  p=0.0000  ***
+Disc Redness Ratio:
+  Normal      : 0.4942 ± 0.0621
+  Papilledema : 0.5300 ± 0.0642
+  p=0.0000  ***
+Green Channel Intensity:
+  Normal      : 151.5801 ± 23.6925
+  Papilledema : 134.8864 ± 24.7712
+  p=0.0000  ***
+Margin Sharpness:
+  Normal      : 0.0071 ± 0.0022
+  Papilledema : 0.0061 ± 0.0018
+  p=0.0011  **
+Intensity Std Dev:
+  Normal      : 0.0693 ± 0.0183
+  Papilledema : 0.0687 ± 0.0199
+  p=0.3950  ns
+Bright Area Fraction:
+  Normal      : 0.7379 ± 0.3207
+  Papilledema : 0.5005 ± 0.3581
+  p=0.0000  ***

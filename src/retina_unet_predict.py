@@ -8,11 +8,13 @@
 
 # imports
 import sys
+import os
 import time
 import math
 import numpy as np
 import configparser
 from matplotlib import pyplot as plt
+from scipy.integrate import trapezoid
 # Keras
 from keras.models import model_from_json
 from keras.models import Model
@@ -21,7 +23,7 @@ from sklearn.metrics import roc_curve
 from sklearn.metrics import roc_auc_score
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import precision_recall_curve
-from sklearn.metrics import jaccard_similarity_score
+from sklearn.metrics import jaccard_score
 from sklearn.metrics import f1_score
 from sklearn.metrics import accuracy_score
 
@@ -131,11 +133,10 @@ else:
 # ================ Run the prediction of the patches ==================================
 best_last = config.get('testing settings', 'best_last')
 # Load the saved model
-model = model_from_json(open(path_experiment+name_experiment +'_architecture.json').read())
-# n_ch = patches_imgs_test.shape[1]
-# print("Patches shape:", patches_imgs_test.shape)
-# model = get_unet(n_ch, patch_height, patch_width)
-model.load_weights(path_experiment+name_experiment + '_'+best_last+'_weights.h5')
+from keras.models import load_model
+model = load_model(path_experiment+name_experiment +'_'+best_last+'_model.keras')
+# Transpose test data from channels_first to channels_last
+patches_imgs_test = np.transpose(patches_imgs_test, (0, 2, 3, 1))
 start = time.time()  # start timing for inference
 # Calculate the predictions
 predictions = model.predict(patches_imgs_test, batch_size=32, verbose=2)
@@ -172,6 +173,29 @@ gtruth_masks = gtruth_masks[:,:,0:full_img_height,0:full_img_width]
 print("Orig imgs shape: " +str(orig_imgs.shape))
 print("pred imgs shape: " +str(pred_imgs.shape))
 print("Gtruth imgs shape: " +str(gtruth_masks.shape))
+# ================= SAVE PREDICTION PROBABILITY MAPS =================
+os.makedirs(path_experiment + "probability_maps", exist_ok=True)
+
+for i in range(pred_imgs.shape[0]):
+    plt.imsave(
+        path_experiment + f"probability_maps/prob_{i:02d}.png",
+        pred_imgs[i, 0],
+        cmap="gray"
+    )
+
+# ================= SAVE BINARY VESSEL MASKS =================
+THRESHOLD = 0.2
+binary_vessels = (pred_imgs >= THRESHOLD).astype(np.uint8)
+
+os.makedirs(path_experiment + "binary_vessels", exist_ok=True)
+
+for i in range(binary_vessels.shape[0]):
+    plt.imsave(
+        path_experiment + f"binary_vessels/vessel_{i:02d}.png",
+        binary_vessels[i, 0],
+        cmap="gray"
+    )
+
 visualize(group_images(orig_imgs,N_visual),path_experiment+"all_originals")#.show()
 visualize(group_images(pred_imgs,N_visual),path_experiment+"all_predictions")#.show()
 visualize(group_images(gtruth_masks,N_visual),path_experiment+"all_groundTruths")#.show()
@@ -190,7 +214,7 @@ for i in range(int(N_predicted/group)):
 
 def get_best_and_worst():
     acc = np.zeros(N_predicted)
-    threshold_confusion = 0.5
+    threshold_confusion = 0.2
     for i in range(0, N_predicted):
         y_scores_sub, y_true_sub = pred_only_FOV(pred_imgs[i:i+1, :, :, :], gtruth_masks[i:i+1, :, :, :],
                                                  test_border_masks[i:i+1, :, :, :])
@@ -254,7 +278,7 @@ plt.savefig(path_experiment+"ROC.png")
 precision, recall, thresholds = precision_recall_curve(y_true, y_scores)
 precision = np.fliplr([precision])[0]  #so the array is increasing (you won't get negative AUC)
 recall = np.fliplr([recall])[0]  #so the array is increasing (you won't get negative AUC)
-AUC_prec_rec = np.trapz(precision,recall)
+AUC_prec_rec = trapezoid(precision,recall)
 print("\nArea under Precision-Recall curve: " +str(AUC_prec_rec))
 prec_rec_curve = plt.figure()
 plt.plot(recall,precision,'-',label='Area Under the Curve (AUC = %0.4f)' % AUC_prec_rec)
@@ -265,7 +289,7 @@ plt.legend(loc="lower right")
 plt.savefig(path_experiment+"Precision_recall.png")
 
 #Confusion matrix
-threshold_confusion = 0.5
+threshold_confusion = 0.2
 print("\nConfusion matrix:  Custom threshold (for positive) of " +str(threshold_confusion))
 y_pred = np.empty((y_scores.shape[0]))
 for i in range(y_scores.shape[0]):
@@ -294,7 +318,7 @@ if float(confusion[1,1]+confusion[0,1])!=0:
 print("Precision: " +str(precision))
 
 #Jaccard similarity index
-jaccard_index = jaccard_similarity_score(y_true, y_pred, normalize=True)
+jaccard_index = jaccard_score(y_true, y_pred)
 print("\nJaccard similarity score: " +str(jaccard_index))
 
 #F1 score

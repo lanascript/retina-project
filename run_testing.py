@@ -17,7 +17,7 @@ else:
 
 # config file to read from
 config = configparser.RawConfigParser()
-config.readfp(open(r'./' + config_name))
+config.read_file(open(r'./' + config_name))
 # ===========================================
 # name of the experiment!!
 name_experiment = config.get('experiment name', 'name')

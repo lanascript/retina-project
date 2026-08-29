@@ -53,9 +53,9 @@ def visualize(data,filename):
 # prepare the mask in the right shape for the Unet
 def masks_Unet(masks):
     assert (len(masks.shape)==4)  #4D arrays
-    assert (masks.shape[1]==1 )  #check the channel is 1
-    im_h = masks.shape[2]
-    im_w = masks.shape[3]
+    assert (masks.shape[3]==1 )  #check the channel is 1 (channels_last format)
+    im_h = masks.shape[1]
+    im_w = masks.shape[2]
     masks = np.reshape(masks,(masks.shape[0],im_h*im_w))
     new_masks = np.empty((masks.shape[0],im_h*im_w,2))
     for i in range(masks.shape[0]):

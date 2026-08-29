@@ -4,7 +4,7 @@
 #
 ##################################################
 
-import os, sys
+import os, sys, time
 import configparser
 
 start = time.time()
@@ -17,7 +17,7 @@ else:
 
 # config file to read from
 config = configparser.RawConfigParser()
-config.readfp(open(r'./' + config_name))
+config.read_file(open(r'./' + config_name))
 # ===========================================
 # name of the experiment
 name_experiment = config.get('experiment name', 'name')
@@ -37,16 +37,16 @@ else:
 
 print("copy the configuration file in the results folder")
 if sys.platform=='win32':
-    os.system('copy configuration.txt .\\' +name_experiment+'\\'+name_experiment+'_configuration.txt')
+    os.system('copy ' + config_name + ' .\\'  +name_experiment+'\\'+name_experiment+'_configuration.txt')
 else:
-    os.system('cp configuration.txt ./' +name_experiment+'/'+name_experiment+'_configuration.txt')
+    os.system('cp ' + config_name + ' ./' +name_experiment+'/'+name_experiment+'_configuration.txt')
 
 # run the experiment
 if nohup:
     print("\n2. Run the training on GPU with nohup")
-    os.system(run_GPU +' nohup python -u ./src/retina_unet_training.py > ' +'./'+name_experiment+'/'+name_experiment+'_training.nohup')
+    os.system(run_GPU +' nohup python -u ./src/retina_unet_training.py ' + config_name + ' > ' +'./'+name_experiment+'/'+name_experiment+'_training.nohup')
 else:
     print("\n2. Run the training on GPU (no nohup)")
-    os.system(run_GPU +' python ./src/retina_unet_training.py')
+    os.system(run_GPU +' python ./src/retina_unet_training.py ' + config_name)
 
 # Prediction/testing is run with a different script

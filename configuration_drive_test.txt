@@ -10,7 +10,7 @@ test_border_masks = DRIVE_dataset_borderMasks_test.hdf5
 
 
 [experiment name]
-name = test_drive
+name = test_drive_quick
 
 
 [data attributes]
@@ -20,13 +20,13 @@ patch_width = 48
 
 
 [training settings]
-# Number of total patches:
-N_subimgs = 160000
+# Number of total patches: REDUCED FOR QUICK TEST
+N_subimgs = 10000
 # if patches are extracted only inside the field of view:
 inside_FOV = False
 # Number of training epochs
-N_epochs = 4
-batch_size = 32
+N_epochs = 1
+batch_size = 8
 # if running with nohup
 nohup = False
 best_last = best

@@ -1,0 +1,29 @@
+PCA Classifier Results
+======================================================================
+
+PCA Explained Variance:
+  PC1: 77.5%  (cumulative: 77.5%)
+  PC2: 18.7%  (cumulative: 96.2%)
+  PC3: 2.5%  (cumulative: 98.7%)
+  PC4: 1.0%  (cumulative: 99.7%)
+  PC5: 0.3%  (cumulative: 100.0%)
+
+PCA Loadings:
+                    PC1    PC2    PC3    PC4    PC5
+brightness        0.499 -0.117  0.333 -0.153  0.777
+redness          -0.482 -0.095  0.858  0.141 -0.045
+green intensity   0.494 -0.152  0.319 -0.540 -0.583
+margin sharpness  0.185  0.959  0.197  0.065 -0.046
+area bright frac  0.490 -0.184  0.110  0.813 -0.230
+
+Cross-Validation Results:
+  Original 5 features                 Random Forest          F1=0.6997±0.0655  AUC=0.7845±0.0345
+  Original 5 features                 Logistic Regression    F1=0.7104±0.0554  AUC=0.7655±0.0592
+  PCA 2 components (96% var)          Random Forest          F1=0.6481±0.0501  AUC=0.7099±0.0530
+  PCA 2 components (96% var)          Logistic Regression    F1=0.6348±0.0598  AUC=0.6989±0.0819
+  PCA 3 components (99% var)          Random Forest          F1=0.6736±0.0289  AUC=0.7455±0.0410
+  PCA 3 components (99% var)          Logistic Regression    F1=0.6857±0.0582  AUC=0.7154±0.0664
+  PCA 4 components (100% var)         Random Forest          F1=0.7323±0.0535  AUC=0.7931±0.0341
+  PCA 4 components (100% var)         Logistic Regression    F1=0.7013±0.0635  AUC=0.7040±0.0686
+  PCA 5 components (100% var)         Random Forest          F1=0.7623±0.0400  AUC=0.8130±0.0571
+  PCA 5 components (100% var)         Logistic Regression    F1=0.7571±0.0697  AUC=0.7868±0.0375

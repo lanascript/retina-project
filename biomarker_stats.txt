@@ -1,0 +1,14 @@
+Biomarker Statistical Analysis — Normal vs Papilledema
+============================================================
+Vessel Density:
+  Normal      : mean=0.0209  std=0.0145  n=127
+  Papilledema : mean=0.0217  std=0.0141  n=127
+  Mann-Whitney U=7746.0  p=0.5870  ns
+Mean Tortuosity:
+  Normal      : mean=1.9581  std=0.3855  n=127
+  Papilledema : mean=1.9038  std=0.4100  n=127
+  Mann-Whitney U=9193.0  p=0.0540  ns
+Fractal Dimension:
+  Normal      : mean=1.2507  std=0.1713  n=127
+  Papilledema : mean=1.2523  std=0.1999  n=127
+  Mann-Whitney U=7663.0  p=0.4934  ns
